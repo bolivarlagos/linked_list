@@ -38,32 +38,27 @@ void free_all_pointers(struct Node *ptrs_to_free[])
     }
 }
 
-void insert_array_values(int array_of_integers[], struct Node *curr_pointer, struct Node *ptrs_to_free[])
+struct Node *insert_array_values(int array[], struct Node *pointers[])
 {
+    struct Node *current = NULL;
     for (int i = MAX_LIST - 1; i >= 0; i--)
     {
-        struct Node *temp_pointer;
-        temp_pointer = insert(array_of_integers[i], curr_pointer);
-        ptrs_to_free[i] = temp_pointer;
-        curr_pointer = temp_pointer;
+        pointers[i] = insert(array[i], current);
+        current = pointers[i];
     }
+    return current;
 }
 
 int main(void)
 {
-    struct Node *tail;
-    struct Node *current_pointer;
+    struct Node *head;
     struct Node *pointers_to_free[MAX_LIST + 1];
 
-    int my_array[MAX_LIST] = { 22, 33, 44 };
+    int array_of_integers[MAX_LIST] = { 22, 33, 44 };
 
-    tail = insert(100, NULL);
-    current_pointer = tail;
-    pointers_to_free[MAX_LIST] = current_pointer;
+    head = insert_array_values(array_of_integers, pointers_to_free);
 
-    insert_array_values(my_array, current_pointer, pointers_to_free);
-
-    print_list(pointers_to_free[0]);
+    print_list(head);
 
     free_all_pointers(pointers_to_free);
 
