@@ -8,6 +8,27 @@ struct Node
     struct Node *next;
 };
 
+struct Node *insert(int val, struct Node *next_node);
+void print_list(struct Node *list_head);
+void free_all_pointers(struct Node *ptrs_to_free[]);
+struct Node *insert_array_values(int array[], struct Node *pointers[]);
+
+int main(void)
+{
+    struct Node *head;
+    struct Node *pointers_to_free[MAX_LIST + 1];
+
+    int array_of_integers[MAX_LIST] = { 22, 33, 44 };
+
+    head = insert_array_values(array_of_integers, pointers_to_free);
+
+    print_list(head);
+
+    free_all_pointers(pointers_to_free);
+
+    return 0;
+}
+
 struct Node *insert(int val, struct Node *next_node)
 {
     struct Node *new_node;
@@ -47,20 +68,4 @@ struct Node *insert_array_values(int array[], struct Node *pointers[])
         current = pointers[i];
     }
     return current;
-}
-
-int main(void)
-{
-    struct Node *head;
-    struct Node *pointers_to_free[MAX_LIST + 1];
-
-    int array_of_integers[MAX_LIST] = { 22, 33, 44 };
-
-    head = insert_array_values(array_of_integers, pointers_to_free);
-
-    print_list(head);
-
-    free_all_pointers(pointers_to_free);
-
-    return 0;
 }
